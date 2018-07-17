@@ -1,10 +1,12 @@
 <template>
     <div class="property-modal" v-if="openModal">
-        <property-modal-header :id="propertyId"></property-modal-header>
+        <property-modal-header :id="propertyId" :currentView="currentView"></property-modal-header>
         <component
                 :is="currentView"
                 :photos="propertyPhotos"
-
+                :info="propertyInfo"
+                :reviews="propertyReviews"
+                :deals="propertyDeals"
         >
         </component>
     </div>
@@ -34,7 +36,8 @@
       data() {
         return {
           openModal: false,
-          currentView: null
+          currentView: null,
+          activeTab: '',
         }
       },
 
@@ -71,6 +74,15 @@
       computed: {
         propertyPhotos() {
           return this.$store.getters.propertyPhotos;
+        },
+        propertyInfo() {
+          return this.$store.getters.propertyInfo;
+        },
+        propertyReviews() {
+          return this.$store.getters.propertyReviews;
+        },
+        propertyDeals() {
+          return this.$store.getters.propertyDeals;
         }
       },
 
@@ -83,3 +95,11 @@
       }
     }
 </script>
+
+<style scoped>
+    .property-modal {
+        padding: 10px 20px;
+        background-color: white;
+        box-shadow: 0 1px 4px rgba(41,51,57,.5);
+    }
+</style>
