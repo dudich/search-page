@@ -1,33 +1,48 @@
 <template>
-    <li class="property-item">
-        <img class="property-item__image" :src="property.imageLink" alt="image">
-        <div class="property-item__info">
-            <div class="property-item__info-content">
-                <h3 class="property-item__title">{{property.title}}</h3>
-                <ul class="property-item__stars">
-                    <li v-for="star in property.stars">
-                        <i class="fas fa-star"></i>
-                    </li>
-                </ul>
-                <span class="property-item__type">{{property.type}}</span>
-                <div class="reviews">
-                    <div class="reviews-mark" :style="{backgroundColor: rating.color}">
-                        <span>{{property.reviews.mark}}</span>
+    <div>
+        <li class="property-item">
+            <img class="property-item__image" :src="property.imageLink" alt="image" @click="openPhotoGallery(property.id)">
+            <div class="property-item__info">
+                <div class="property-item__info-content">
+                    <h3 class="property-item__title" @click="openPhotoGallery(property.id)">{{property.title}}</h3>
+                    <ul class="property-item__stars">
+                        <li v-for="star in property.stars">
+                            <i class="fas fa-star"></i>
+                        </li>
+                    </ul>
+                    <p class="property-item__location" @click="openInfo(property.id)">Queenstown, 0.9 km to City centre</p>
+                    <p class="property-item__deals" @click="openDeals(property.id)">More deals</p>
+                    <span class="property-item__type">{{property.type}}</span>
+                    <div class="reviews" @click="openReviews(property.id)">
+                        <div class="reviews-mark" :style="{backgroundColor: rating.color}">
+                            <span>{{property.reviews.mark}}</span>
+                        </div>
+                        <span class="reviews-rating">{{rating.string}}</span>
+                        <span class="reviews-count">({{property.reviews.count}} reviews)</span>
                     </div>
-                    <span class="reviews-rating">{{rating.string}}</span>
-                    <span class="reviews-count">({{property.reviews.count}} reviews)</span>
+                </div>
+                <div class="price">
+                    <span>{{property.price}} $</span>
                 </div>
             </div>
-            <div class="price">
-                <span>{{property.price}} $</span>
-            </div>
-        </div>
-    </li>
+        </li>
 
-
+        <property-modal :propertyId="property.id"></property-modal>
+    </div>
 </template>
 
 <script>
+    import {
+      OPEN_PROPERTY_MODAL,
+      CHANGE_PROPERTY_MODAL_COMPONENT,
+      OPEN_PROPERTY_PHOTOS_GALLERY,
+      OPEN_PROPERTY_DEALS,
+      OPEN_PROPERTY_INFO,
+      OPEN_PROPERTY_REVIEWS
+    } from '../store/actionTypes';
+
+    import PropertyModal from './PropertyModal/PropertyModal';
+
   export default {
     props: {
       property: {
@@ -35,20 +50,41 @@
         required: true
       }
     },
+    methods: {
+      openPhotoGallery(id) {
+        EventBus.$emit(CHANGE_PROPERTY_MODAL_COMPONENT , OPEN_PROPERTY_PHOTOS_GALLERY, id );
+        EventBus.$emit(OPEN_PROPERTY_MODAL, id);
+        /*EventBus.$emit(actionTypes.GET_SHARE_FILES, this.shareFiles);*/
+      },
+
+      openDeals(id) {
+        EventBus.$emit(CHANGE_PROPERTY_MODAL_COMPONENT , OPEN_PROPERTY_DEALS, id );
+        EventBus.$emit(OPEN_PROPERTY_MODAL, id);
+      },
+
+      openInfo(id) {
+        EventBus.$emit(CHANGE_PROPERTY_MODAL_COMPONENT , OPEN_PROPERTY_INFO, id );
+        EventBus.$emit(OPEN_PROPERTY_MODAL, id);
+      },
+      openReviews(id) {
+        EventBus.$emit(CHANGE_PROPERTY_MODAL_COMPONENT , OPEN_PROPERTY_REVIEWS, id );
+        EventBus.$emit(OPEN_PROPERTY_MODAL, id);
+      }
+    },
     computed: {
       rating() {
-        const raiting = this.property.reviews.mark;
-        if (raiting >= 8.5) {
+        const rating = this.property.reviews.mark;
+        if (rating >= 8.5) {
           return {
             string: 'Excellent',
             color: '#316300'
           }
-        } else if (raiting >= 8) {
+        } else if (rating >= 8) {
           return {
             string: 'Very good',
             color: '#428500'
           }
-        } else if (raiting >= 7.2) {
+        } else if (rating >= 7.2) {
           return {
             string: 'Good',
             color: '#71A340'
@@ -59,6 +95,9 @@
           color: '#F48F00'
         }
       }
+    },
+    components: {
+      PropertyModal
     }
   }
 </script>

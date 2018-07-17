@@ -6,7 +6,9 @@ import store from  './store/store'
 
 Vue.config.productionTip = false;
 
-/* eslint-disable no-new */
+const EventBus = new Vue();
+window.EventBus = EventBus;
+
 new Vue({
   el: '#app',
   store,

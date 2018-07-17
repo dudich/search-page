@@ -1,3 +1,6 @@
-export default {
-  imageLink: 'http://placekitten.com/160/160'
-}
+export default [
+  {
+    id: 1,
+    imageLink: 'http://placekitten.com/360/160'
+  },
+]
