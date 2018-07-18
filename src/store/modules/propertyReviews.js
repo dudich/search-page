@@ -1,18 +1,19 @@
-import propertyReviews from '../../data/propertyReviews';
+import propertyReviews from '../../mockData/propertyReviews';
+import {FETCH_PROPERTY_REVIEWS} from '../actionTypes';
 
 const state = {
   propertyReviews: []
 };
 
 const mutations = {
-  'FETCH_PROPERTY_REVIEWS' (state, propertyReviews) {
+  FETCH_PROPERTY_REVIEWS (state, propertyReviews) {
     state.propertyReviews = propertyReviews;
   }
 };
 
 const actions = {
   fetchPropertyReviews: ({commit}) => {
-    commit('FETCH_PROPERTY_REVIEWS', propertyReviews);
+    commit(FETCH_PROPERTY_REVIEWS, propertyReviews);
   },
 };
 

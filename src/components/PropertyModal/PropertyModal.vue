@@ -1,6 +1,6 @@
 <template>
     <div class="property-modal" v-if="openModal">
-        <property-modal-header :id="propertyId" :currentView="currentView"></property-modal-header>
+        <property-modal-header :id="propertyId"></property-modal-header>
         <component
                 :is="currentView"
                 :photos="propertyPhotos"
@@ -29,7 +29,7 @@
     export default {
       props: {
         propertyId: {
-          type: Number,
+          type: String,
           required: true
         }
       },
@@ -37,7 +37,6 @@
         return {
           openModal: false,
           currentView: null,
-          activeTab: '',
         }
       },
 
@@ -53,10 +52,6 @@
             this.openModal = false;
           }
         });
-
-        /*EventBus.$on(actionTypes.GET_SHARE_FILES, payload => {
-          this.payloadData = payload;
-        });*/
 
         EventBus.$on(CHANGE_PROPERTY_MODAL_COMPONENT, (view, id) => {
           const map = {

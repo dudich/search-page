@@ -16,7 +16,6 @@
 
 <script>
   import {
-    OPEN_PROPERTY_MODAL,
     CLOSE_PROPERTY_MODAL,
     CHANGE_PROPERTY_MODAL_COMPONENT,
     OPEN_PROPERTY_PHOTOS_GALLERY,
@@ -28,11 +27,7 @@
   export default {
     props: {
       id: {
-        type: Number,
-        required: true
-      },
-      currentView: {
-        type: Object,
+        type: String,
         required: true
       }
     },
@@ -42,22 +37,16 @@
       },
       openPhotoGallery(id) {
         EventBus.$emit(CHANGE_PROPERTY_MODAL_COMPONENT, OPEN_PROPERTY_PHOTOS_GALLERY, id);
-        EventBus.$emit(OPEN_PROPERTY_MODAL, id);
-        /*EventBus.$emit(actionTypes.GET_SHARE_FILES, this.shareFiles);*/
       },
 
       openDeals(id) {
         EventBus.$emit(CHANGE_PROPERTY_MODAL_COMPONENT, OPEN_PROPERTY_DEALS, id);
-        EventBus.$emit(OPEN_PROPERTY_MODAL, id);
       },
-
       openInfo(id) {
         EventBus.$emit(CHANGE_PROPERTY_MODAL_COMPONENT, OPEN_PROPERTY_INFO, id);
-        EventBus.$emit(OPEN_PROPERTY_MODAL, id);
       },
       openReviews(id) {
         EventBus.$emit(CHANGE_PROPERTY_MODAL_COMPONENT, OPEN_PROPERTY_REVIEWS, id);
-        EventBus.$emit(OPEN_PROPERTY_MODAL, id);
       }
     }
   }

@@ -1,33 +1,35 @@
 <template>
     <div class="property-item-container">
         <li class="property-item">
-            <img class="property-item__image" :src="property.imageLink" alt="image"
+            <img class="property-item__image" src="http://placekitten.com/160/160" alt="image"
                  @click="openPhotoGallery(property.id)">
             <div class="property-item__info">
                 <div class="property-item__info-content">
-                    <h3 class="property-item__title" @click="openPhotoGallery(property.id)">{{property.title}}</h3>
-                    <ul class="property-item__stars">
-                        <li v-for="star in property.stars">
+                    <h3 class="property-item__title" @click="openPhotoGallery(property.id)">{{property.attributes.name}}</h3>
+                    <ul class="property-item__stars" v-if="stars">
+                        <li v-for="star in stars">
                             <i class="fas fa-star"></i>
                         </li>
+                        <li class="half-star" v-if="halfStar">
+                            <i class="fas fa-star-half-alt"></i>
+                        </li>
                     </ul>
-                    <span class="property-item__type">{{property.type}}</span>
-
-                    <p class="property-item__location" @click="openInfo(property.id)">Queenstown, 0.9 km to City
-                        centre</p>
+                    <p class="property-item__location" @click="openInfo(property.id)">
+                        {{property.attributes.address.country.name}}, {{property.attributes.address.region.name}}
+                    </p>
 
                     <div class="property-item__reviews" @click="openReviews(property.id)">
                         <div class="reviews-mark" :style="{backgroundColor: rating.color}">
-                            <span>{{property.reviews.mark}}</span>
+                            <span>8</span>
                         </div>
                         <span class="reviews-rating">{{rating.string}}</span>
-                        <span class="reviews-count">({{property.reviews.count}} reviews)</span>
+                        <span class="reviews-count">(1200 reviews)</span>
                     </div>
 
                     <p class="property-item__deals" @click="openDeals(property.id)">More deals</p>
                 </div>
                 <div class="price">
-                    <span>{{property.price}} $</span>
+                    <span>500 {{property.attributes.currency}}</span>
                 </div>
             </div>
         </li>
@@ -44,10 +46,10 @@
     OPEN_PROPERTY_DEALS,
     OPEN_PROPERTY_INFO,
     OPEN_PROPERTY_REVIEWS
-  } from '../store/actionTypes';
+  } from '../../store/actionTypes';
 
-  import PropertyModal from './PropertyModal/PropertyModal';
-  import ratingMixin from '../mixins/ratingMixin';
+  import PropertyModal from '../PropertyModal/PropertyModal';
+  import ratingMixin from '../../mixins/ratingMixin';
 
   export default {
     props: {
@@ -61,7 +63,6 @@
       openPhotoGallery(id) {
         EventBus.$emit(CHANGE_PROPERTY_MODAL_COMPONENT, OPEN_PROPERTY_PHOTOS_GALLERY, id);
         EventBus.$emit(OPEN_PROPERTY_MODAL, id);
-        /*EventBus.$emit(actionTypes.GET_SHARE_FILES, this.shareFiles);*/
       },
 
       openDeals(id) {
@@ -76,6 +77,15 @@
       openReviews(id) {
         EventBus.$emit(CHANGE_PROPERTY_MODAL_COMPONENT, OPEN_PROPERTY_REVIEWS, id);
         EventBus.$emit(OPEN_PROPERTY_MODAL, id);
+      }
+    },
+    computed: {
+      stars() {
+        return Math.floor(+this.property.attributes['star-rating']);
+      },
+
+      halfStar() {
+        return !Number.isInteger(+this.property.attributes['star-rating']);
       }
     },
     components: {
@@ -137,7 +147,9 @@
         font-size: 12px;
         color: #F6AB3F
     }
-
+    .half-star {
+        margin-left: -4px;
+    }
     .property-item__reviews {
         margin-top: 16px;
     }

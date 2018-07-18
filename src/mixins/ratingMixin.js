@@ -1,7 +1,7 @@
 export default {
   computed: {
     rating() {
-      const rating = this.property.reviews.mark;
+      const rating = 8;
       if (rating >= 8.5) {
         return {
           string: 'Excellent',

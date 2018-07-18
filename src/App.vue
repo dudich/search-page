@@ -1,21 +1,8 @@
 <template>
   <div id="app">
-    <SearchPage/>
+    <router-view></router-view>
   </div>
 </template>
-
-<script>
-import SearchPage from './components/SearchPage'
-
-export default {
-  components: {
-    SearchPage
-  },
-  created() {
-    this.$store.dispatch('fetchProperties');
-  }
-}
-</script>
 
 <style>
 #app {

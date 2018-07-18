@@ -5,8 +5,11 @@
 </template>
 
 <script>
-import PropertyList from './PropertyList'
+import PropertyList from '../components/PropertyList/PropertyList'
 export default {
+  created() {
+    this.$store.dispatch('loadData');
+  },
   components: {
     PropertyList
   }
