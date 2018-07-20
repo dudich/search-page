@@ -1,10 +1,11 @@
 import axios from 'axios';
+import authConfig from '../authConfig';
 
 export const HTTP = axios.create({
-  baseURL: `http://localhost:8081/`,
+  baseURL: authConfig.baseURL,
   headers: {
-    Authorization: 'Bearer DQ/rMWfGglCvxnGgLl2n7EB6FGJ1DWh/MSmhOHRCDKkQ+E2m3bRyLsxZSDP6NN+m',
+    Authorization: `Bearer ${authConfig.token}`,
     'Access-Control-Allow-Origin': '*',
-    token : 'DQ/rMWfGglCvxnGgLl2n7EB6FGJ1DWh/MSmhOHRCDKkQ+E2m3bRyLsxZSDP6NN+m'
+    token : authConfig.token
   },
 });
