@@ -3,5 +3,5 @@ export default {
   clientSecret: 'LLXhdiBa89in11NbeYFEQUpwtiYLOgZ3wvOGVfV0p8gHdC5JZ+32sFt0zRzBS3VO',
   grantType: 'authorization_code',
   baseURL: 'http://localhost:8081/',
-  token: 'UzAsgjvbHApsiKjfRC6J7LJ8ezRpZAMKyCb17H6xw122wdoHLHkwQ9+nvit/qq/x'
+  token: 'hcvZB+j9AUePhK+sEeGkcq+42SBv+sJmMxTmgfP3wuxC0DqX4a3Q4uQPBSObgz+h'
 }

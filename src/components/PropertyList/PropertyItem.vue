@@ -20,16 +20,16 @@
 
                     <div class="property-item__reviews" @click="openReviews(property.id)">
                         <div class="reviews-mark" :style="{backgroundColor: rating.color}">
-                            <span>8</span>
+                            <span>{{randomMark(markRange.min, markRange.max)}}</span>
                         </div>
                         <span class="reviews-rating">{{rating.string}}</span>
-                        <span class="reviews-count">(1200 reviews)</span>
+                        <span class="reviews-count">({{randomReviewsQuantity(reviewsQuantityRange.min, reviewsQuantityRange.max)}} reviews)</span>
                     </div>
 
                     <p class="property-item__deals" @click="openDeals(property.id)">More deals</p>
                 </div>
                 <div class="price">
-                    <span>500 {{property.attributes.currency}}</span>
+                    <span>{{randomPrice(priceRange.min, priceRange.max)}} {{property.attributes.currency}}</span>
                 </div>
             </div>
         </li>
@@ -59,6 +59,22 @@
       }
     },
     mixins: [ratingMixin],
+    data() {
+      return {
+        markRange: {
+          min: 5,
+          max: 10
+        },
+        priceRange: {
+          min: 100,
+          max: 800
+        },
+        reviewsQuantityRange: {
+          min: 10,
+          max: 80
+        }
+      }
+    },
     methods: {
       openPhotoGallery(id) {
         EventBus.$emit(CHANGE_PROPERTY_MODAL_COMPONENT, OPEN_PROPERTY_PHOTOS_GALLERY, id);
@@ -77,6 +93,16 @@
       openReviews(id) {
         EventBus.$emit(CHANGE_PROPERTY_MODAL_COMPONENT, OPEN_PROPERTY_REVIEWS, id);
         EventBus.$emit(OPEN_PROPERTY_MODAL, id);
+      },
+
+      randomMark(min, max) {
+        return ((Math.random() * (max - min)) + min).toFixed(1);
+      },
+      randomPrice(min, max) {
+        return Math.floor((Math.random() * (max - min)) + min);
+      },
+      randomReviewsQuantity(min, max) {
+        return Math.floor((Math.random() * (max - min)) + min);
       }
     },
     computed: {
